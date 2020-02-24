@@ -1,0 +1,24 @@
+CREATE TABLE st_merchant_user_master (
+  user_id INT(5) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  user_name VARCHAR(30) NOT NULL,
+  user_status ENUM('ACTIVE','INACTIVE','TERMINATE') DEFAULT 'ACTIVE',
+  account_balance DOUBLE(10,2) DEFAULT 0
+)ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE st_merchant_transaction_master (
+  txn_id INT(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  engine_txn_id INT(10) NOT NULL UNIQUE KEY,
+  txn_amount DOUBLE(10,2) DEFAULT 0,
+  txn_done_on DATETIME DEFAULT NULL
+)ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+CREATE TABLE st_merchant_user_trans_mapping (
+  txn_id INT(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  user_id INT(5) NOT NULL,
+  post_txn_balance_amount DOUBLE(10,2) DEFAULT 0
+)ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+
+CREATE UNIQUE INDEX unique_index
+ON st_merchant_user_trans_mapping (`txn_id`,`user_id`); 
